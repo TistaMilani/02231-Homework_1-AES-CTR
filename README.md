@@ -1,57 +1,59 @@
 # AES CTR for exercise 1.3
 This code implement a AES_CTR by using AES-ECB to encrypt counter blocks
 
-## Requirements
-This script uses the `pycryptodome` library. Install with:
+## Compilation and Installation
+This script uses `python3` and `pycryptodome` library. Install with:
 ```bash
 pip install pycryptodome
 ```
 
-## Usage
 Run the script and follow the on-screen menu:
 ```bash
 python3 aes_ctr.py
 ```
 
-## ENC-DEC explanation (CTR mode)
-Encryption of a single block (index `i`):
+## Running the Tests
+
+When you start the program, the key is generated for the session. You’ll then see the following menu:
 
 ```
-counter = nonce + i
-Fk_i = AES_ECB(key, counter)
-c_i = p_i ⊕ Fk_i
+-------------------------MENU-------------------------
+---------k= <hex-key> ---------
+1) Encrypt plaintext (utf-8 in, hex out)
+2) Decrypt ciphertext (hex in, bytes out)
+3) Automatic Enc-Dec test
+4) Proving IND-CCA insecurity (encrypt message, flip with given payload)
+5) Change key value (hex input)
+0) Exit
+Choose an option: 
 ```
 
-Decryption simply XORs the same `Fk_i` with `c_i` to recover `p_i`:
+Here’s what each option does:
 
-```
-p_i = c_i ⊕ Fk_i
-```
+### 1) Encrypt plaintext (utf-8 in → hex out)
+- **Input**: a UTF-8 string.
+- **Action**: encrypts it with the session key.
+- **Output**: ciphertext in hexadecimal form.
 
-### Bitflipping explanation
-CTR mode is malleable: flipping bits in the ciphertext flips the corresponding bits in the plaintext after decryption.
-Consider a ciphertext block `c_i` corresponding to plaintext block `p_i`:
+### 2) Decrypt ciphertext (hex in → bytes out)
+- **Input**: ciphertext as hex string.
+- **Action**: decrypts with the session key.
+- **Output**: plaintext as raw bytes (may not always print nicely if non-UTF8).
 
-```
-c_i = p_i ⊕ Fk_i
-```
+### 3) Automatic Enc-Dec Test
+- Runs an automatic test: encrypts a random message, then decrypts it, and shows that the decrypted result matches the original.
 
-During decryption:
+### 4) Proving **IND-CCA Insecurity**
+- **Input**: a message and a payload (must be shorter or equal to message length).
+- **Action**: 
+  - Encrypts the message.
+  - Modifies ciphertext by flipping bits using the payload.
+  - Decrypts both original and modified ciphertexts.
+- **Output**: shows how flipping bits in ciphertext modifies the decrypted message (demonstrating malleability).
 
-```
-c_i ⊕ Fk_i
-(p_i ⊕ Fk_i) ⊕ Fk_i
-p_i
-```
+### 5) Change Key Value (hex input)
+- **Input**: a new 16-byte key in hex form.
+- **Action**: replaces the current key with the new one.
 
-
-If an attacker modifies the ciphertext block to `c_i' = c_i ⊕ flip`, the decrypted block becomes:
-```
-c_i' ⊕ Fk_i
-(p_i ⊕ Fk_i ⊕ flip) ⊕ Fk_i
-p_i ⊕ flip
-```
-
-
-So the attacker can change the plaintext in a controlled way by XORing a `flip` mask into the ciphertext. In the provided script the is constructed `flip = plaintext_prefix ⊕ payload` and XOR it to the ciphertext's corresponding bytes so the decrypted plaintext prefix becomes `payload`.
-
+### 0) Exit
+- Exits the program.
