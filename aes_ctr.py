@@ -77,6 +77,18 @@ def decrypt(key, ciphertext):
 
 #encription and decription test
 def enc_dec_test():
+    m_rand = os.urandom(random.randint(0, 40))
+    
+    key = keygen()
+    c = encrypt(key, m_rand)
+    p = decrypt(key, c)
+
+    print("key:         ", key.hex())
+    print("random m:    ", m_rand.hex())
+    print("ecrypted c:  ", c.hex())
+    print("decrypted m: ", p.hex())
+    print("")
+    return p == m_randdef enc_dec_test():
     m_rand = os.urandom(random.randint(0, 2000))
     
     key = keygen()
