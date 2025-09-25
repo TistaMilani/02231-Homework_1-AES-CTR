@@ -88,14 +88,8 @@ def enc_dec_test():
     print("ecrypted c:  ", c.hex())
     print("decrypted m: ", p.hex())
     print("")
-    return p == m_randdef enc_dec_test():
-    m_rand = os.urandom(random.randint(0, 2000))
-    
-    key = keygen()
-    c = encrypt(key, m_rand)
-    p = decrypt(key, c)
-
     return p == m_rand
+
 
 #bitflipping attack
 def IND_CCA_insecurity_test(ciphertext, plaintext, payload):
