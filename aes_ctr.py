@@ -120,11 +120,13 @@ def main():
     while True:
         print("-------------------------MENU-------------------------")
         print("---------k=",key.hex(),"---------")
-        print("1) Encrypt plaintext (hex output)")
-        print("2) Decrypt ciphertext (hex input)")
-        print("3) Proving IND-CCA insecurity (encrypt message, flip with given payload)")
-        print("4) Automatic Enc-Dec test")
-        print("5) Change key value (hex input)")
+        print("1) Encrypt plaintext (utf-8 in, hex out)")
+        print("2) Encrypt plaintext (hex in, hex out)")
+        print("3) Decrypt ciphertext (hex in, bytes out)")
+        print("4) Decrypt ciphertext (hex in, hex out)")
+        print("5) Automatic Enc-Dec test")
+        print("6) Proving IND-CCA insecurity (encrypt message, flip with given payload)")
+        print("7) Change key value (hex input)")
         print("0) Exit")
 
         choice = input("Choose an option: ").strip()
@@ -137,6 +139,13 @@ def main():
             print("")
 
         elif choice == '2':
+            hex_plain = input("Enter plaintext to encrypt: ").strip()
+            plain_bytes = bytes.fromhex(hex_plain)
+            c = encrypt(key, plain_bytes)
+            print("Ciphertext in hex: ", c.hex())
+            print("")
+            
+        elif choice == '3':
             hex_ct = input("Paste ciphertext in hex: ").strip()
             ct_bytes = bytes.fromhex(hex_ct)
 
@@ -144,7 +153,18 @@ def main():
             print("Plaintext:", pt)
             print("")
             
-        elif choice == '3':
+        elif choice == '4':
+            hex_ct = input("Paste ciphertext in hex: ").strip()
+            ct_bytes = bytes.fromhex(hex_ct)
+
+            pt = decrypt(key, ct_bytes)
+            print("Plaintext:", pt.hex())
+            print("")
+            
+        elif choice == '5':
+            enc_dec_test()
+            
+        elif choice == '6':
             msg = input("Enter the message to encrypt: ").encode('utf-8')
             payload = input("Enter the payload to flip in (<= message length): ").encode('utf-8')
 
@@ -168,10 +188,7 @@ def main():
             print("Decrypted modified plaintext: ", pt_mod)
             print("")
             
-        elif choice == '4':
-            enc_dec_test()
-            
-        elif choice == '5':
+        elif choice == '7':
             hex_key = input("Paste new key in hex: ").strip()
             key = bytes.fromhex(hex_key)
             print("")
@@ -181,7 +198,7 @@ def main():
             break
         
         else:
-            print("Unknown option. Please choose 0-5.\n")
+            print("Unknown option. Please choose 0-7.\n")
 
 
 if __name__ == '__main__':
