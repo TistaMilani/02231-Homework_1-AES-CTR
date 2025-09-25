@@ -2,7 +2,10 @@
 This code implement a AES_CTR by using AES-ECB to encrypt counter blocks
 
 ## Compilation and Installation
-This script uses `python3` and `pycryptodome` library. Install with:
+This script uses `python3` and `pycryptodome` library.
+
+Tested on `Ubuntu 24.04 LTS`, `python-3.12` and `pycryptodome-3.23`.
+Install with:
 ```bash
 pip install pycryptodome
 ```
