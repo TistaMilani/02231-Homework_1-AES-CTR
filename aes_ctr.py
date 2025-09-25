@@ -135,13 +135,6 @@ def main():
             c = encrypt(key, plain)
             print("Ciphertext in hex: ", c.hex())
             print("")
-
-        # elif choice == '2':
-        #     hex_plain = input("Enter plaintext to encrypt: ").strip()
-        #     plain_bytes = bytes.fromhex(hex_plain)
-        #     c = encrypt(key, plain_bytes)
-        #     print("Ciphertext in hex: ", c.hex())
-        #     print("")
             
         elif choice == '2':
             hex_ct = input("Paste ciphertext in hex: ").strip()
@@ -150,14 +143,6 @@ def main():
             pt = decrypt(key, ct_bytes)
             print("Plaintext:", pt)
             print("")
-            
-        # elif choice == '4':
-        #     hex_ct = input("Paste ciphertext in hex: ").strip()
-        #     ct_bytes = bytes.fromhex(hex_ct)
-
-        #     pt = decrypt(key, ct_bytes)
-        #     print("Plaintext:", pt.hex())
-        #     print("")
             
         elif choice == '3':
             enc_dec_test()
