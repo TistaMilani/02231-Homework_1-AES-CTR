@@ -40,7 +40,7 @@ def encrypt(key, plaintext):
     ct = b''.join(ciphertext_blocks)
     return nonce + ct
 
-#given the key and the cyphertext retreive the plaintext 
+#given the key and the cyphertext retrieve the plaintext 
 def decrypt(key, ciphertext):
     if len(ciphertext) < BLOCK_SIZE:
         raise ValueError("Ciphertext too short: missing nonce")
@@ -75,7 +75,7 @@ def decrypt(key, ciphertext):
         
     return b''.join(plaintext_blocks)
 
-#encription and decription test
+#encryption and decryption test
 def enc_dec_test():
     m_rand = os.urandom(random.randint(0, 40))
     
